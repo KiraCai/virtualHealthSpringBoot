@@ -3,6 +3,7 @@ package virtualhealth.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import virtualhealth.dao.UserDao;
 import virtualhealth.model.Client;
 import virtualhealth.service.UserService;
@@ -16,11 +17,11 @@ public class ClientServiceImp implements UserService {
     private final UserDao repository;
     @Override
     public List<Client> findAllUsers() {
-        return repository.findAllUsers();
+        return repository.findAll();
     }
     @Override
     public void addUser(Client client) {
-        repository.addUser(client);
+        repository.save(client);
     }
     @Override
     public Client findByEmail(String email) {
@@ -28,10 +29,12 @@ public class ClientServiceImp implements UserService {
     }
     @Override
     public Client updateUser(Client client) {
-        return repository.updateUser(client);
+        return repository.save(client);
     }
     @Override
+    @Transactional
     public void deleteUserByEmail(String email){
+        //repository.findByEmail(email).ifPresent(repository::delete);
         repository.deleteUserByEmail(email);
     }
 }

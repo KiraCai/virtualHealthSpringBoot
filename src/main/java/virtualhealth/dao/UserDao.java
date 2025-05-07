@@ -1,15 +1,14 @@
 package virtualhealth.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import virtualhealth.model.Client;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao extends JpaRepository<Client, Long> {
+    //интерфейс, который Spring автоматически подключает как репозиторий для работы с базой данных
 
-    List<Client> findAllUsers();
-    void addUser(Client client);
     Client findByEmail(String email);
-    Client updateUser(Client client);
     void deleteUserByEmail(String email);
 
 }

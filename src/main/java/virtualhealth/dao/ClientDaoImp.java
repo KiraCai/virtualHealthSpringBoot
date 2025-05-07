@@ -1,4 +1,4 @@
-package virtualhealth.dao;
+/*package virtualhealth.dao;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @Repository
-public class ClientDaoImp implements UserDao{
+public class ClientDaoImp implements UserDao<Client, Long>{*/
 
-    private final List<Client> CLIENTS = new ArrayList<Client>();
+   /* private final List<Client> CLIENTS = new ArrayList<Client>();
     @Override
     public List<Client> findAllUsers() {
         return CLIENTS;
@@ -22,15 +22,15 @@ public class ClientDaoImp implements UserDao{
     @Override
     public void addUser(Client client) {
         CLIENTS.add(client);
-    }
-    @Override
+    }*/
+    /*@Override
     public Client findByEmail(String email) {
         return CLIENTS.stream()
                 .filter(c -> c.getEmail().equals(email))
                 .findFirst()
                 .orElse(null);
-    }
-    @Override
+    //}
+    /*@Override
     public Client updateUser(Client client) {
         //индекс студента у которого электронная почта совпадает с почтой студента из вызова метода
         var clientIndex = IntStream.range(0, CLIENTS.size())
@@ -42,12 +42,12 @@ public class ClientDaoImp implements UserDao{
             return client;
         }
         return null;
-    }
-    @Override
+    }*/
+    /*@Override
     public void deleteUserByEmail(String email){
         var client = findByEmail(email);
         if(client != null) {
             CLIENTS.remove(client);
         }
     }
-}
+}*/
