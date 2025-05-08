@@ -8,23 +8,23 @@ import java.time.LocalTime;
 
 @Data
 @Entity
-@Table(name = "prescription")
-public class Prescription {
-    //todo изменить тип для документа
+@Table(name = "calendar")
+public class Calendar {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prescription_id")
-    private Long idPrescription;
+    @Column(name = "booking_id")
+    private Long idBooking;
 
-    //history table
-    @ManyToOne
-    @JoinColumn(name = "history_id", nullable = false)
-    private History history;
-
-    //doctor table
+    // doctor table
     @OneToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
     Doctor doctor;
+
+    // client table
+    @OneToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
+    Client client;
 
     @Column(name = "date")
     private LocalDate date;
@@ -32,10 +32,9 @@ public class Prescription {
     @Column(name = "time")
     private LocalTime time;
 
-    @Column(name = "treatment")
-    String treatment;
+    @Column(name = "meeting_place")
+    String meetingPlace;
 
-    @Column(name = "document")
-    String document;
-
+    @Column(name = "reason")
+    String reason;
 }

@@ -10,19 +10,24 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "vaccination")
 public class Vaccination {
-    //todo добавить ссылку на таблицу доктора 1:1 и изменить тип для документа
+    //todo и изменить тип для документа
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vaccination_id")
     private Long idVaccination;
 
-    @Column(name = "name")
-    private String name;
+    //doctor table
+    @OneToOne
+    @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
+    Doctor doctor;
 
     //history table
     @ManyToOne
     @JoinColumn(name="history_id", nullable=false)
     private History history;
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "date")
     private LocalDate date;
@@ -41,4 +46,5 @@ public class Vaccination {
 
     @Column(name = "document")
     String document;
+
 }

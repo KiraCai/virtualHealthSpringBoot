@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "client")
 public class Client {
-    //todo добавить ограничения обязательные к заполнению поля и тип данных документа и фото удалять не из всех таблиц все
+    //todo добавить ограничения обязательные к заполнению поля удалять не из всех таблиц все
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "client_id")
@@ -18,6 +18,10 @@ public class Client {
     // history table
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private History history;
+
+    // calendar table
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private Calendar calendar;
 
     @Column(name = "first_name")
     String firstName;
