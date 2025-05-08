@@ -1,25 +1,23 @@
 package virtualhealth.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "clients")
-
+@Table(name = "client")
 public class Client {
-
+    //todo добавить ограничения обязательные к заполнению поля и тип данных документа и фото удалять не из всех таблиц все
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, name = "id")
-    private Long id;
+    @Column(unique = true, name = "client_id")
+    private Long idClient;
 
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_history")
-    private History history;*/
+    // history table
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private History history;
 
     @Column(name = "first_name")
     String firstName;
@@ -36,9 +34,19 @@ public class Client {
     @Column(unique = true, name = "email")
     String email;
 
+    @Column(name = "password")
+    String password;
+
     @Column(name = "tel")
     String tel;
 
     @Column(name = "address")
     String address;
+
+    @Column(name = "document")
+    String document;
+
+    @Column(name = "photo")
+    String photo;
+
 }

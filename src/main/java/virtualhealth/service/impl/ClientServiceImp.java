@@ -22,6 +22,7 @@ public class ClientServiceImp implements UserService {
     @Override
     public void addUser(Client client) {
         repository.save(client);
+        System.out.println("Add sucessful");
     }
     @Override
     public Client findByEmail(String email) {
