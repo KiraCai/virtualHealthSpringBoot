@@ -71,7 +71,7 @@ public class Doctor {
     @Column(name = "sex")
     Character sex;
 
-    @Column(name = "address_work")
+    @Column(unique = true, name = "address_work")
     String addressWork;
 
     @Column(name = "address_personal")
