@@ -1,5 +1,7 @@
 package virtualhealth.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,7 +24,7 @@ public class Vaccination {
     Doctor doctor;
 
     //history table
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name="history_id", nullable=false)
     private History history;
 

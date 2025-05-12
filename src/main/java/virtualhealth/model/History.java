@@ -19,22 +19,27 @@ public class History {
     //client table
     @OneToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
+    @ToString.Exclude
     Client client;
 
     //vaccination table
     @OneToMany(mappedBy = "history", cascade= CascadeType.ALL)
+    @ToString.Exclude
     private List<Vaccination> vaccination;
 
     //test table
     @OneToMany(mappedBy = "history", cascade= CascadeType.ALL)
+    @ToString.Exclude
     private List<Test> test;
 
     //prescription table
     @OneToMany(mappedBy = "history", cascade= CascadeType.ALL)
+    @ToString.Exclude
     private List<Prescription> prescription;
 
     //consultation table
     @OneToMany(mappedBy = "history", cascade= CascadeType.ALL)
+    @ToString.Exclude
     private List<Consultation> consultation;
 
 }

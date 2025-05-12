@@ -18,7 +18,6 @@ public class HistoryServiceImp implements HistoryService {
     private final UserDao userDao;
 
     @Override
-    @Transactional
     public List<History> findAllHistory() {
         return historyDao.findAll();
     }
@@ -38,7 +37,10 @@ public class HistoryServiceImp implements HistoryService {
     }
 
     @Override
+    @Transactional
     public void deleteHistoryByUserId(Long clientId){
-        historyDao.deleteByClient_IdClient(clientId);
+        System.out.println("Начало удаления");
+        int deleted = historyDao.deleteByClient_IdClient(clientId);
+        System.out.println("Deleted rows: " + deleted);
     }
 }
