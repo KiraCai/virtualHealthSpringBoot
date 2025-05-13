@@ -24,8 +24,8 @@ public class Doctor {
     private Prescription prescription;
 
     // test table
-    @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private Test test;
+    /*@OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private Test test;*/
 
     // consultation table
     @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)

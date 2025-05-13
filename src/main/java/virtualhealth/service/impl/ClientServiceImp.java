@@ -35,7 +35,6 @@ public class ClientServiceImp implements UserService {
     @Override
     @Transactional
     public void deleteUserByEmail(String email){
-        //repository.findByEmail(email).ifPresent(repository::delete);
         repository.deleteUserByEmail(email);
     }
 }

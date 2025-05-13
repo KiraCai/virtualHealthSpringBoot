@@ -22,9 +22,9 @@ public class Test {
     private History history;
 
     //doctor table
-    @OneToOne
+    /*@OneToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
-    Doctor doctor;
+    Doctor doctor;*/
 
     @Column(name = "date")
     private LocalDate date;

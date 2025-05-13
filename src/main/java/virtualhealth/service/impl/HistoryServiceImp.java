@@ -40,7 +40,7 @@ public class HistoryServiceImp implements HistoryService {
     @Transactional
     public void deleteHistoryByUserId(Long clientId){
         System.out.println("Начало удаления");
-        int deleted = historyDao.deleteByClient_IdClient(clientId);
-        System.out.println("Deleted rows: " + deleted);
+        historyDao.deleteByClient_IdClient(clientId);
+        System.out.println("Deleted rows: end" );
     }
 }

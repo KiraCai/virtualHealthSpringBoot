@@ -17,9 +17,8 @@ public class Client {
     private Long idClient;
 
     // history table
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    //@ToString.Exclude
-    private History history;
+    /*@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private History history;*/
 
     // calendar table
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
