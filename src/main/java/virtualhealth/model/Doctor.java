@@ -2,8 +2,10 @@ package virtualhealth.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -24,8 +26,9 @@ public class Doctor {
     private Prescription prescription;
 
     // test table
-    /*@OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private Test test;*/
+    @OneToMany(mappedBy = "doctor", cascade= CascadeType.ALL)
+    @ToString.Exclude
+    private List<Test> test;
 
     // consultation table
     @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)

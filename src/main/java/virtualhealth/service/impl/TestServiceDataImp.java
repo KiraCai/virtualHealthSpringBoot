@@ -26,10 +26,10 @@ public class TestServiceDataImp implements DataService<Test> {
     public List<Test> findAllByIdHistory(Long idHistory) {
         return testDao.findAllByHistory_IdHistory(idHistory);
     }
-    //@Override todo потом добавлю для доктора
-    //public List<Test> findAllByIdDoctor(Long idDoctor) {
-     //   return testDao.findAllByDoctor_IdDoctor(idDoctor);
-    //}
+    @Override
+    public List<Test> findAllByIdDoctor(Long idDoctor) {
+        return testDao.findAllByDoctor_IdDoctor(idDoctor);
+    }
     @Override
     public List<Test> findAllByDate(LocalDate localDate){
         return testDao.findAllByDate(localDate);

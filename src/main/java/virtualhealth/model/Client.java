@@ -16,10 +16,6 @@ public class Client {
     @Column(unique = true, name = "client_id")
     private Long idClient;
 
-    // history table
-    /*@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    private History history;*/
-
     // calendar table
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private Calendar calendar;

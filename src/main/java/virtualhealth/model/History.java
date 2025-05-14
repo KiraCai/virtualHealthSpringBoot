@@ -19,7 +19,6 @@ public class History {
     //client table
     @OneToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
-    @ToString.Exclude
     Client client;
 
     //vaccination table

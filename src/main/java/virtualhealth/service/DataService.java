@@ -7,7 +7,7 @@ public interface DataService<D> {
     List<D> findAllData(); //работает
     List<D> findAllByIdHistory(Long idHistory); //работает
     D findTestById(Long id);  //работает
-    //List<D> findAllByIdDoctor(Long idDoctor);
+    List<D> findAllByIdDoctor(Long idDoctor); // работает
     List<D> findAllByDate(LocalDate localDate); //работает
     void addData(D d);  //работает
     D updateData(D d);  //работает
