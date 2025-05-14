@@ -10,7 +10,6 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "consultation")
 public class Consultation {
-    //todo изменить тип для документа
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "consultation_id")
@@ -22,7 +21,7 @@ public class Consultation {
     private History history;
 
     //doctor table
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
     Doctor doctor;
 

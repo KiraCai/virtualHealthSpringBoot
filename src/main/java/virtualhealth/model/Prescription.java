@@ -22,7 +22,7 @@ public class Prescription {
     private History history;
 
     //doctor table
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
     Doctor doctor;
 

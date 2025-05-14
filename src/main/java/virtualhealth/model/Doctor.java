@@ -18,12 +18,14 @@ public class Doctor {
     private Long idDoctor;
 
     // vaccination table
-    @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private Vaccination vaccination;
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Vaccination> vaccination;
 
     // prescription table
-    @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private Prescription prescription;
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Prescription> prescription;
 
     // test table
     @OneToMany(mappedBy = "doctor", cascade= CascadeType.ALL)
@@ -31,8 +33,9 @@ public class Doctor {
     private List<Test> test;
 
     // consultation table
-    @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private Consultation consultation;
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Consultation> consultation;
 
     // calendar table
     @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)

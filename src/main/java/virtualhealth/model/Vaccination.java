@@ -19,7 +19,7 @@ public class Vaccination {
     private Long idVaccination;
 
     //doctor table
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
     Doctor doctor;
 
