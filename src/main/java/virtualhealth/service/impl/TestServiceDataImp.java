@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import virtualhealth.dao.TestDao;
-import virtualhealth.dao.UserDao;
-import virtualhealth.model.History;
 import virtualhealth.model.Test;
 import virtualhealth.service.DataService;
 

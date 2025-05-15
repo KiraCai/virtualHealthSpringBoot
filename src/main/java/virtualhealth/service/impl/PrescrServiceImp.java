@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import virtualhealth.dao.PrescrDao;
-import virtualhealth.dao.TestDao;
 import virtualhealth.model.Prescription;
-import virtualhealth.model.Test;
 import virtualhealth.service.DataService;
 
 import java.time.LocalDate;

@@ -1,6 +1,5 @@
 package virtualhealth.service;
 
-import org.springframework.stereotype.Service;
 import virtualhealth.model.Client;
 
 import java.util.List;

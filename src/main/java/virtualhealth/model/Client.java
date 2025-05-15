@@ -5,20 +5,22 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "client")
 public class Client {
-    //todo добавить ограничения обязательные к заполнению поля удалять не из всех таблиц все
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "client_id")
     private Long idClient;
 
     // calendar table
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    private Calendar calendar;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Calendar> calendar;
 
     @Column(name = "first_name")
     String firstName;

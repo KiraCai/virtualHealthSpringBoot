@@ -17,14 +17,14 @@ public class Calendar {
     private Long idBooking;
 
     // doctor table
-    @OneToOne
-    @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
-    Doctor doctor;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
     // client table
-    @OneToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
-    Client client;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Column(name = "date")
     private LocalDate date;

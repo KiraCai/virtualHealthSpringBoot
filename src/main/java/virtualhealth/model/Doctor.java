@@ -38,8 +38,9 @@ public class Doctor {
     private List<Consultation> consultation;
 
     // calendar table
-    @OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private Calendar calendar;
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Calendar> calendar;
 
     @Column(name = "first_name")
     String firstName;

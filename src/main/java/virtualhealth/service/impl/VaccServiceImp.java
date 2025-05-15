@@ -3,9 +3,7 @@ package virtualhealth.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import virtualhealth.dao.TestDao;
 import virtualhealth.dao.VaccDao;
-import virtualhealth.model.Test;
 import virtualhealth.model.Vaccination;
 import virtualhealth.service.DataService;
 
