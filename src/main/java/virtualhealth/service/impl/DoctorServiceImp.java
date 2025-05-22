@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class DoctorServiceImp implements DoctorService {
-    private final DoctorDao doctorDao;
+    private DoctorDao doctorDao;
 
     @Override
     public List<Doctor> findAllDoctor(){

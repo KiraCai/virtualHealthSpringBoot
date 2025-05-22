@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TestServiceDataImp implements DataService<Test> {
-    private final TestDao testDao;
+    private TestDao testDao;
 
     @Override
     public List<Test> findAllData() {

@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class VaccServiceImp implements DataService<Vaccination> {
-    private final VaccDao vaccDao;
+    private VaccDao vaccDao;
 
     @Override
     public List<Vaccination> findAllData() {

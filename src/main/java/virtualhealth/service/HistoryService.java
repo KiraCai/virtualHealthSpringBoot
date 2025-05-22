@@ -7,6 +7,6 @@ import java.util.List;
 public interface HistoryService {
     List<History> findAllHistory();
     History findByIdClient(Long idClient);
-    void createHistoryByUserId(Long clientId);
+    void addHistory(History history);
     void deleteHistoryByUserId(Long idHistory);
 }

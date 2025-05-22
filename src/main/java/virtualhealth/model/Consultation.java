@@ -2,6 +2,7 @@ package virtualhealth.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,11 +19,13 @@ public class Consultation {
     //history table
     @ManyToOne
     @JoinColumn(name = "history_id", nullable = false)
+    @ToString.Exclude
     private History history;
 
     //doctor table
     @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
+    @ToString.Exclude
     Doctor doctor;
 
     @Column(name = "date")

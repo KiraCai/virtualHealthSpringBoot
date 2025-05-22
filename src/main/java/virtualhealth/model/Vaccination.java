@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,11 +22,13 @@ public class Vaccination {
     //doctor table
     @ManyToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
+    @ToString.Exclude
     Doctor doctor;
 
     //history table
     @ManyToOne(optional = false)
     @JoinColumn(name="history_id", nullable=false)
+    @ToString.Exclude
     private History history;
 
     @Column(name = "name")

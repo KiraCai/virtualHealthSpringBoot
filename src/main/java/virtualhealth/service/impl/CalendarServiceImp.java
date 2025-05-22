@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CalendarServiceImp implements CalendarService {
 
-    private final CalendarDao calendarDao;
+    private CalendarDao calendarDao;
 
     @Override
     public List<Calendar> findAllCalendar(){

@@ -19,11 +19,13 @@ public class Test {
     //history table
     @ManyToOne
     @JoinColumn(name = "history_id", nullable = false)
+    @ToString.Exclude
     private History history;
 
     //doctor table
     @ManyToOne
     @JoinColumn(name = "doctor_id")
+    @ToString.Exclude
     private Doctor doctor;
 
     @Column(name = "date")

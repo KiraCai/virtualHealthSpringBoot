@@ -2,6 +2,7 @@ package virtualhealth.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,11 +20,13 @@ public class Calendar {
     // doctor table
     @ManyToOne
     @JoinColumn(name = "doctor_id")
+    @ToString.Exclude
     private Doctor doctor;
 
     // client table
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @ToString.Exclude
     private Client client;
 
     @Column(name = "date")

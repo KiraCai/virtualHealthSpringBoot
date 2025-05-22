@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class HistoryServiceImp implements HistoryService {
-    private final HistoryDao historyDao;
-    private final UserDao userDao;
+    private HistoryDao historyDao;
+    private UserDao userDao;
 
     @Override
     public List<History> findAllHistory() {
@@ -28,13 +28,16 @@ public class HistoryServiceImp implements HistoryService {
     }
 
     @Override
-    public void createHistoryByUserId(Long clientId){
+    public void addHistory(History history){
+        historyDao.save(history);
+    }
+    /*public void createHistoryByUserId(Long clientId){
         Client client = userDao.findById(clientId)
                 .orElseThrow(() -> new RuntimeException("Клиент не найден"));
         History history = new History();
         history.setClient(client);
         historyDao.save(history);
-    }
+    }*/
 
     @Override
     @Transactional

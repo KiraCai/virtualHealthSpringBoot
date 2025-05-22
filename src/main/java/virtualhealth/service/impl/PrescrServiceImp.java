@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class PrescrServiceImp implements DataService<Prescription> {
-    private final PrescrDao prescrDao;
+    private PrescrDao prescrDao;
 
     @Override
     public List<Prescription> findAllData() {

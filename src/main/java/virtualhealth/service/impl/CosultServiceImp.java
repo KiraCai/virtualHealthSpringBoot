@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class CosultServiceImp implements DataService<Consultation> {
-    private final ConsultDao consultDao;
+    private ConsultDao consultDao;
 
     @Override
     public List<Consultation> findAllData() {

@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClientServiceImp implements UserService {
     //второй уровень использует третий сервис - дао
-    private final UserDao repository;
+    private UserDao repository;
     @Override
     public List<Client> findAllUsers() {
         return repository.findAll();
