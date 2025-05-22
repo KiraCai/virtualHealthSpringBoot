@@ -3,7 +3,7 @@ FROM openjdk:21 AS build
 
 WORKDIR /app
 
-COPY app .
+COPY . .
 
 RUN ./mvnw clean install -DskipTests
 
