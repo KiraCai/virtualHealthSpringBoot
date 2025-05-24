@@ -4,7 +4,6 @@ import virtualhealth.model.Client;
 
 import java.util.List;
 
-
 public interface UserService {
     List<Client> findAllUsers();
     void addUser(Client client);

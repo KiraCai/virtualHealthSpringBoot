@@ -3,6 +3,7 @@ package virtualhealth.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 import virtualhealth.model.Client;
 import virtualhealth.service.UserService;
 
@@ -22,9 +23,23 @@ public class UserController {
     } //работает
 
     @PostMapping("/login")
-    public void loginUser(@RequestBody Client client) {
-        System.out.println("JSON: " + client);
-        userService.addUser(client);
+    public ResponseEntity loginUser(@RequestBody Client client) {
+        try {
+            Client foundClient = userService.findByEmail(client.getEmail());
+            if (foundClient == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Пользователь не найден");
+            }
+            if (!foundClient.getPassword().equals(client.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный пароль");
+            }
+            return ResponseEntity.ok(foundClient);
+
+        } catch (java.lang.Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Ошибка сервера");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка сервера");
+        }
+
     }
 
     @PostMapping("/signup")
@@ -32,12 +47,6 @@ public class UserController {
         System.out.println("JSON: " + client);
         userService.addUser(client);
     }
-
-    //public void addUser(@RequestBody Client client) {
-    //    System.out.println("JSON: " + client);
-    //    System.out.println("Form: " + client);
-    //    userService.addUser(client);
-    //}ч
 
     //получение почты через url адресс
     @GetMapping("/{email}")
