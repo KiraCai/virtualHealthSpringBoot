@@ -22,10 +22,17 @@ public class UserController {
     } //работает
 
     @PostMapping("/login")
+    public void loginUser(@RequestBody Client client) {
+        System.out.println("JSON: " + client);
+        userService.addUser(client);
+    }
+
+    @PostMapping("/signup")
     public void addUser(@RequestBody Client client) {
         System.out.println("JSON: " + client);
         userService.addUser(client);
     }
+
     //public void addUser(@RequestBody Client client) {
     //    System.out.println("JSON: " + client);
     //    System.out.println("Form: " + client);
