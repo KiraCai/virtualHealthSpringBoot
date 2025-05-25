@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import virtualhealth.config.JwtUtil;
 import virtualhealth.model.Client;
 import virtualhealth.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v0.1/users")
@@ -26,17 +28,18 @@ public class UserController {
     public ResponseEntity loginUser(@RequestBody Client client) {
         try {
             Client foundClient = userService.findByEmail(client.getEmail());
-            if (foundClient == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Пользователь не найден");
+            if (foundClient == null || !foundClient.getPassword().equals(client.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect login or password");
             }
-            if (!foundClient.getPassword().equals(client.getPassword())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный пароль");
+            try {
+                String token = JwtUtil.generateToken(foundClient.getEmail());
+                return ResponseEntity.ok().body(Map.of("token", token));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(500).body("Error generating token");
             }
-            return ResponseEntity.ok(foundClient);
 
         } catch (java.lang.Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Ошибка сервера");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка сервера");
         }
 
@@ -47,6 +50,24 @@ public class UserController {
         System.out.println("JSON: " + client);
         userService.addUser(client);
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity getProfile(@RequestHeader("Authorization") String authHeader) {
+        try {
+            if (!authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Токен отсутствует или некорректен");
+            }
+
+            String token = authHeader.substring(7);
+            String email = JwtUtil.validateTokenAndGetEmail(token);
+            Client client = userService.findByEmail(email);
+            return ResponseEntity.ok(client);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный или просроченный токен");
+        }
+    }
+
 
     //получение почты через url адресс
     @GetMapping("/{email}")
