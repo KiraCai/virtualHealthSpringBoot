@@ -51,5 +51,4 @@ public class Vaccination {
 
     @Column(name = "document")
     String document;
-
 }

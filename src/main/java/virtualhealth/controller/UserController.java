@@ -5,9 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import virtualhealth.config.JwtUtil;
+import virtualhealth.dto.ClientUpdateDTO;
 import virtualhealth.model.Client;
 import virtualhealth.service.UserService;
 
+import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +60,6 @@ public class UserController {
             if (!authHeader.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Токен отсутствует или некорректен");
             }
-
             String token = authHeader.substring(7);
             String email = JwtUtil.validateTokenAndGetEmail(token);
             Client client = userService.findByEmail(email);
@@ -68,6 +70,31 @@ public class UserController {
         }
     }
 
+    @PutMapping("/profile/update")
+    public ResponseEntity updateProfile(@RequestBody ClientUpdateDTO dto, Principal principal) {
+        System.out.println("Principal: " + principal.getName()); //todo email
+        Client user = userService.findByEmail(principal.getName());
+
+        if (dto.getFirstName() != null) user.setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null) user.setLastName(dto.getLastName());
+        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
+        if (dto.getAddress() != null) user.setAddress(dto.getAddress());
+        if (dto.getSex() != null && !dto.getSex().isEmpty()) {
+            user.setSex(dto.getSex());
+        }
+        if (dto.getTel() != null) user.setTel(dto.getTel());
+        if (dto.getDateBirth() != null && !dto.getDateBirth().isEmpty()) {
+            user.setDateBirth(LocalDate.parse(dto.getDateBirth()));
+        }
+
+        try {
+            userService.updateUser(user);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Profile update error");
+        }
+    }
 
     //получение почты через url адресс
     @GetMapping("/{email}")

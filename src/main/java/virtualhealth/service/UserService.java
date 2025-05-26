@@ -8,6 +8,7 @@ public interface UserService {
     List<Client> findAllUsers();
     void addUser(Client client);
     Client findByEmail(String email);
+    Client findByName(String firstName);
     Client updateUser(Client client);
     void deleteUserByEmail(String email);
 }

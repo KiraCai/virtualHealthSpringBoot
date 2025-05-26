@@ -40,5 +40,4 @@ public class Prescription {
 
     @Column(name = "document")
     String document;
-
 }

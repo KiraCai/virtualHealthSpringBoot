@@ -42,5 +42,4 @@ public class Consultation {
 
     @Column(name = "document")
     String document;
-
 }

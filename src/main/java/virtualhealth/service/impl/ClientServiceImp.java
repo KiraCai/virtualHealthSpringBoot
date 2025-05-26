@@ -29,6 +29,10 @@ public class ClientServiceImp implements UserService {
         return repository.findByEmail(email);
     }
     @Override
+    public Client findByName(String firstName) {
+        return repository.findByFirstName(firstName);
+    }
+    @Override
     public Client updateUser(Client client) {
         return repository.save(client);
     }
