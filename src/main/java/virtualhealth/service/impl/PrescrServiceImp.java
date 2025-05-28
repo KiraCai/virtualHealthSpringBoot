@@ -22,7 +22,7 @@ public class PrescrServiceImp implements DataService<Prescription> {
 
     @Override
     public List<Prescription> findAllByIdHistory(Long idHistory) {
-        return prescrDao.findAllByHistory_IdHistory(idHistory);
+        return prescrDao.findAllByHistory_IdHistoryOrderByDateDesc(idHistory);
     }
     @Override
     public List<Prescription> findAllByIdDoctor(Long idDoctor) {

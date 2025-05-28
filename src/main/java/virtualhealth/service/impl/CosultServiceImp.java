@@ -22,7 +22,7 @@ public class CosultServiceImp implements DataService<Consultation> {
 
     @Override
     public List<Consultation> findAllByIdHistory(Long idHistory) {
-        return consultDao.findAllByHistory_IdHistory(idHistory);
+        return consultDao.findAllByHistory_IdHistoryOrderByDateDesc(idHistory);
     }
     @Override
     public List<Consultation> findAllByIdDoctor(Long idDoctor) {

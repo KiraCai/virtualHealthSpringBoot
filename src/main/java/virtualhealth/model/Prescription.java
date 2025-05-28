@@ -11,7 +11,6 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "prescription")
 public class Prescription {
-    //todo изменить тип для документа
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prescription_id")

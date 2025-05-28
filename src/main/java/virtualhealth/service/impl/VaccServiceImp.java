@@ -22,7 +22,7 @@ public class VaccServiceImp implements DataService<Vaccination> {
 
     @Override
     public List<Vaccination> findAllByIdHistory(Long idHistory) {
-        return vaccDao.findAllByHistory_IdHistory(idHistory);
+        return vaccDao.findAllByHistory_IdHistoryOrderByDateDesc(idHistory);
     }
     @Override
     public List<Vaccination> findAllByIdDoctor(Long idDoctor) {

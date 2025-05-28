@@ -43,7 +43,7 @@ public class CalendarServiceImp implements CalendarService {
     }
     @Override
     public List<Calendar> findByIdClient(Long idClient){
-        return calendarDao.findAllByClient_IdClient(idClient);
+        return calendarDao.findAllByClient_IdClientOrderByDateDesc(idClient);
     }
     @Override
     @Transactional

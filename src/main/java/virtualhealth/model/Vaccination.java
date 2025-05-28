@@ -41,14 +41,14 @@ public class Vaccination {
     private LocalTime time;
 
     @Column(name = "name_vac")
-    String nameVac;
+    private String nameVac;
 
     @Column(name = "place")
-    String place;
+    private String place;
 
     @Column(name = "reason")
-    String reason;
+    private String reason;
 
     @Column(name = "document")
-    String document;
+    private String document;
 }

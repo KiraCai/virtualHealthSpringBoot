@@ -35,18 +35,18 @@ public class Test {
     private LocalTime time;
 
     @Column(name = "name_test")
-    String nameTest;
+    private String nameTest;
 
     @Column(name = "place")
-    String place;
+    private String place;
 
     @Column(name = "result")
-    String result;
+    private String result;
 
     @Column(name = "reason")
-    String reason;
+    private String reason;
 
     @Column(name = "document")
-    String document;
+    private String document;
 
 }

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface VaccDao extends JpaRepository<Vaccination, Long> {
-    List<Vaccination> findAllByHistory_IdHistory(Long id);
+    List<Vaccination> findAllByHistory_IdHistoryOrderByDateDesc(Long id);
     List<Vaccination> findAllByDoctor_IdDoctor(Long id);
     List<Vaccination> findAllByDate(LocalDate localDate);
 }

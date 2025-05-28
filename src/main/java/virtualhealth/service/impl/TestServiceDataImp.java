@@ -22,7 +22,7 @@ public class TestServiceDataImp implements DataService<Test> {
 
     @Override
     public List<Test> findAllByIdHistory(Long idHistory) {
-        return testDao.findAllByHistory_IdHistory(idHistory);
+        return testDao.findAllByHistory_IdHistoryOrderByDateDesc(idHistory);
     }
     @Override
     public List<Test> findAllByIdDoctor(Long idDoctor) {
