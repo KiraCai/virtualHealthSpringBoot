@@ -20,7 +20,7 @@ public class Biomarker {
     @ToString.Exclude
     private Disease disease;
 
-    @Column(name = "name")
+    @Column(unique = true, name = "name")
     private String name;
 
     @Column(name = "description")
