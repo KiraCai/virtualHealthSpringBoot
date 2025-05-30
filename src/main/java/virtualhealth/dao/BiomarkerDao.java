@@ -11,4 +11,5 @@ public interface BiomarkerDao extends JpaRepository<Biomarker, Long> {
     Biomarker findByName(String name);
     void deleteBiomarkerByName(String name);
     List<Biomarker> findAllByDisease_IdDisease(Long idDisease);
+    boolean existsByName(String name);
 }
