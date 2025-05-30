@@ -21,16 +21,19 @@ public class DataLoaderService {
     @Transactional
     public void loadData() {
         // Pneumonia
-        Disease pneumonia = new Disease();
-        pneumonia.setName("Pneumonia");
-        pneumonia.setDescription("Pneumonia is an inflammation of the lungs, primarily affecting the alveoli. It is a leading cause of death in Togo.");
-        pneumonia.setMortalityRate(BigDecimal.valueOf(2.3)); // Mortality rate in Togo (per 100,000 population)
-        pneumonia.setWorldRank(4);  // Global rank
-        pneumonia.setDeath(4200);  // Number of deaths in Togo
-        pneumonia.setPercentage(BigDecimal.valueOf(0.025));   // Mortality percentage
-
+        Disease pneumonia;
         if (!diseaseDao.existsByName("Pneumonia")) {
-        diseaseDao.save(pneumonia);}
+            pneumonia = new Disease();
+            pneumonia.setName("Pneumonia");
+            pneumonia.setDescription("Pneumonia is an inflammation of the lungs, primarily affecting the alveoli. It is a leading cause of death in Togo.");
+            pneumonia.setMortalityRate(BigDecimal.valueOf(2.3)); // Mortality rate in Togo (per 100,000 population)
+            pneumonia.setWorldRank(4);  // Global rank
+            pneumonia.setDeath(4200);  // Number of deaths in Togo
+            pneumonia.setPercentage(BigDecimal.valueOf(0.025));   // Mortality percentage
+            diseaseDao.save(pneumonia);
+        } else {
+            pneumonia = diseaseDao.findByName("Pneumonia");
+        }
 
         // Adding biomarkers related to Pneumonia
         // Biomarker: Procalcitonin (PCT)
@@ -106,16 +109,19 @@ public class DataLoaderService {
         }
 
         // Malaria
-        Disease malaria = new Disease();
-        malaria.setName("Malaria");
-        malaria.setDescription("Malaria is a life-threatening disease caused by parasites transmitted to humans through the bites of infected female Anopheles mosquitoes.");
-        malaria.setMortalityRate(BigDecimal.valueOf(3.5)); // Mortality rate in Togo
-        malaria.setWorldRank(9);  // Global rank
-        malaria.setDeath(6400);   // Number of deaths in Togo
-        malaria.setPercentage(BigDecimal.valueOf(0.042)); // Mortality percentage
-
+        Disease malaria;
         if (!diseaseDao.existsByName("Malaria")) {
-        diseaseDao.save(malaria);}
+            malaria = new Disease();
+            malaria.setName("Malaria");
+            malaria.setDescription("Malaria is a life-threatening disease caused by parasites transmitted to humans through the bites of infected female Anopheles mosquitoes.");
+            malaria.setMortalityRate(BigDecimal.valueOf(3.5)); // Mortality rate in Togo
+            malaria.setWorldRank(9);  // Global rank
+            malaria.setDeath(6400);   // Number of deaths in Togo
+            malaria.setPercentage(BigDecimal.valueOf(0.042)); // Mortality percentage
+            diseaseDao.save(malaria);
+        } else {
+            malaria = diseaseDao.findByName("Malaria");
+        }
 
         // Adding biomarker related to Malaria
         // Biomarker: G6PD Deficiency
@@ -200,16 +206,19 @@ public class DataLoaderService {
         }
 
         // HIV/AIDS
-        Disease hiv = new Disease();
-        hiv.setName("HIV/AIDS");
-        hiv.setDescription("Human Immunodeficiency Virus (HIV) attacks the body's immune system and can lead to Acquired Immunodeficiency Syndrome (AIDS) if not treated.");
-        hiv.setMortalityRate(BigDecimal.valueOf(1.8)); // Mortality rate in Togo
-        hiv.setWorldRank(6);  // Global rank
-        hiv.setDeath(3500);   // Number of deaths in Togo
-        hiv.setPercentage(BigDecimal.valueOf(0.020)); // Mortality percentage
-
+        Disease hiv;
         if (!diseaseDao.existsByName("HIV/AIDS")) {
-        diseaseDao.save(hiv);}
+            hiv = new Disease();
+            hiv.setName("HIV/AIDS");
+            hiv.setDescription("Human Immunodeficiency Virus (HIV) attacks the body's immune system and can lead to Acquired Immunodeficiency Syndrome (AIDS) if not treated.");
+            hiv.setMortalityRate(BigDecimal.valueOf(1.8)); // Mortality rate in Togo
+            hiv.setWorldRank(6);  // Global rank
+            hiv.setDeath(3500);   // Number of deaths in Togo
+            hiv.setPercentage(BigDecimal.valueOf(0.020)); // Mortality percentage
+            diseaseDao.save(hiv);
+        } else {
+            hiv = diseaseDao.findByName("HIV/AIDS");
+        }
 
         // Adding biomarker related to HIV
         // Biomarker: CD4+ T Lymphocytes
@@ -218,7 +227,7 @@ public class DataLoaderService {
             markerHiv1.setDisease(hiv); // Link the biomarker to the HIV disease entity
             markerHiv1.setName("CD4+ T Lymphocytes");
             markerHiv1.setDescription("Key indicator of immune status in HIV patients. A decreasing level suggests disease progression.");
-            biomarkerDao.saveAndFlush(markerHiv1);
+            biomarkerDao.save(markerHiv1);
         }
 
         // Biomarker: HIV RNA Viral Load
@@ -227,7 +236,7 @@ public class DataLoaderService {
             markerHiv2.setDisease(hiv);
             markerHiv2.setName("HIV RNA Viral Load");
             markerHiv2.setDescription("Measures the amount of HIV in the blood. Used to assess the effectiveness of antiretroviral therapy.");
-            biomarkerDao.saveAndFlush(markerHiv2);
+            biomarkerDao.save(markerHiv2);
         }
 
         // Biomarker: β2-Microglobulin
@@ -236,7 +245,7 @@ public class DataLoaderService {
             markerHiv3.setDisease(hiv);
             markerHiv3.setName("β2-Microglobulin");
             markerHiv3.setDescription("Elevated levels indicate active viral replication and disease progression.");
-            biomarkerDao.saveAndFlush(markerHiv3);
+            biomarkerDao.save(markerHiv3);
         }
 
         // Biomarker: CD8+ T Lymphocytes
@@ -245,7 +254,7 @@ public class DataLoaderService {
             markerHiv4.setDisease(hiv);
             markerHiv4.setName("CD8+ T Lymphocytes");
             markerHiv4.setDescription("Cytotoxic T cells that play a role in controlling HIV infection; their count provides insight into immune activation.");
-            biomarkerDao.saveAndFlush(markerHiv4);
+            biomarkerDao.save(markerHiv4);
         }
 
         // Biomarker: CD4/CD8 Ratio
@@ -254,7 +263,7 @@ public class DataLoaderService {
             markerHiv5.setDisease(hiv);
             markerHiv5.setName("CD4/CD8 Ratio");
             markerHiv5.setDescription("An indicator of immune system balance; a declining ratio suggests disease progression.");
-            biomarkerDao.saveAndFlush(markerHiv5);
+            biomarkerDao.save(markerHiv5);
         }
 
         // Biomarker: Lactate Dehydrogenase (LDH)
@@ -263,24 +272,27 @@ public class DataLoaderService {
             markerHiv6.setDisease(hiv);
             markerHiv6.setName("Lactate Dehydrogenase (LDH)");
             markerHiv6.setDescription("An enzyme released during tissue damage; elevated levels may indicate HIV-associated conditions.");
-            biomarkerDao.saveAndFlush(markerHiv6);
+            biomarkerDao.save(markerHiv6);
         }
 
 
         // Sickle Cell Disease
-        Disease sickleCell = new Disease();
-        sickleCell.setName("Sickle Cell Disease");
-        sickleCell.setDescription("Sickle Cell Disease is a group of inherited red blood cell disorders characterized by abnormal hemoglobin, leading to distorted (sickle-shaped) red blood cells.");
-        sickleCell.setMortalityRate(BigDecimal.valueOf(0.7)); // Mortality rate in Togo
-        sickleCell.setWorldRank(12);  // Global rank
-        sickleCell.setDeath(1200);    // Number of deaths in Togo
-        sickleCell.setPercentage(BigDecimal.valueOf(0.010)); // Mortality percentage
-
-        // Sickle Cell Disease
+        Disease sickleCell;
         if (!diseaseDao.existsByName("Sickle Cell Disease")) {
-        diseaseDao.save(sickleCell);}
-        // Adding biomarker related to Sickle Cell Disease
+            sickleCell = new Disease();
+            sickleCell.setName("Sickle Cell Disease");
+            sickleCell.setDescription("Sickle Cell Disease is a group of inherited red blood cell disorders characterized by abnormal hemoglobin, leading to distorted (sickle-shaped) red blood cells.");
+            sickleCell.setMortalityRate(BigDecimal.valueOf(0.7)); // Mortality rate in Togo
+            sickleCell.setWorldRank(12);  // Global rank
+            sickleCell.setDeath(1200);    // Number of deaths in Togo
+            sickleCell.setPercentage(BigDecimal.valueOf(0.010)); // Mortality percentage
 
+            diseaseDao.save(sickleCell);
+        } else {
+            sickleCell = diseaseDao.findByName("Sickle Cell Disease");
+        }
+
+        // Adding biomarker related to Sickle Cell Disease
         // Biomarker: D-Dimer
         if (!biomarkerDao.existsByName("D-Dimer")) {
             Biomarker markerSickleCell1 = new Biomarker();
@@ -363,18 +375,22 @@ public class DataLoaderService {
         }
 
         // Diabetes
-        Disease diabetes = new Disease();
-        diabetes.setName("Diabetes");
-        diabetes.setDescription("Diabetes is a chronic disease that occurs when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces.");
-        diabetes.setMortalityRate(BigDecimal.valueOf(2.1)); // Mortality rate in Togo
-        diabetes.setWorldRank(3);  // Global rank
-        diabetes.setDeath(2800);   // Number of deaths in Togo
-        diabetes.setPercentage(BigDecimal.valueOf(0.015)); // Mortality percentage
-        // Diabetes
+        Disease diabetes;
         if (!diseaseDao.existsByName("Diabetes")) {
-        diseaseDao.save(diabetes);}
-            // Adding biomarker related to Diabetes
-            // Biomarker: HbA1c
+            diabetes = new Disease();
+            diabetes.setName("Diabetes");
+            diabetes.setDescription("Diabetes is a chronic disease that occurs when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces.");
+            diabetes.setMortalityRate(BigDecimal.valueOf(2.1)); // Mortality rate in Togo
+            diabetes.setWorldRank(3);  // Global rank
+            diabetes.setDeath(2800);   // Number of deaths in Togo
+            diabetes.setPercentage(BigDecimal.valueOf(0.015)); // Mortality percentage
+
+            diseaseDao.save(diabetes);
+        } else {
+            diabetes = diseaseDao.findByName("Diabetes");
+        }
+        // Adding biomarker related to Diabetes
+        // Biomarker: HbA1c
         if (!biomarkerDao.existsByName("HbA1c")) {
             Biomarker markerDiabetes1 = new Biomarker();
             markerDiabetes1.setDisease(diabetes);
@@ -428,16 +444,15 @@ public class DataLoaderService {
             biomarkerDao.save(markerDiabetes6);
         }
 
-            // Biomarker: Adiponectin
+        // Biomarker: Adiponectin
         if (!biomarkerDao.existsByName("Adiponectin")) {
             Biomarker markerDiabetes7 = new Biomarker();
             markerDiabetes7.setDisease(diabetes);
             markerDiabetes7.setName("Adiponectin");
             markerDiabetes7.setDescription("A hormone involved in glucose regulation and fatty acid oxidation; lower levels are associated with insulin resistance.");
-            biomarkerDao.save(markerDiabetes7);}
-
+            biomarkerDao.save(markerDiabetes7);
+        }
 
     }
-
 
 }
