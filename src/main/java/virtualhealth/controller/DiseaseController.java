@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import virtualhealth.config.JwtUtil;
 import virtualhealth.dao.BiomarkerDao;
 import virtualhealth.dao.DiseaseDao;
-import virtualhealth.dto.ClientUpdateDTO;
-import virtualhealth.dto.PatientFullProfileDTO;
-import virtualhealth.dto.TestDisplayDTO;
-import virtualhealth.dto.VaccinationDisplayDTO;
+import virtualhealth.dto.*;
 import virtualhealth.mapper.*;
 import virtualhealth.model.*;
 import virtualhealth.service.*;
@@ -27,10 +24,13 @@ public class DiseaseController {
     private DiseaseService diseaseService;
     private BiomarkerService biomarkerService;
 
+    private DiseaseMapper diseaseMapper;
+    private BiomarkerMapper biomarkerMapper;
     // get all disease
     @GetMapping("/diseases")
-    public List<Disease> getDiseases() {
-        return diseaseService.findAllDisease();
+    public List<DiseaseDTO> getDiseases() {
+        List<Disease> diseases = diseaseService.findAllDisease();
+        return diseaseMapper.toDTOs(diseases);
     }
 
     // we obtain biomarkers for a specific disease
@@ -38,4 +38,26 @@ public class DiseaseController {
     public List<Biomarker> getBiomarkers(@PathVariable Long idDisease) {
         return biomarkerService.findByIdDisease(idDisease);
     }
+
+    /*@GetMapping("/profile/full")
+    public ResponseEntity getFullProfile(@RequestHeader("Authorization") String authHeader) {
+        if (!authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
+
+        String token = authHeader.substring(7);
+        String email = JwtUtil.validateTokenAndGetEmail(token);
+        Disease disease = diseaseService.findByEmail(email);
+        History history = historyService.findByIdClient(client.getIdClient());
+
+        PatientFullProfileDTO dto = new PatientFullProfileDTO();
+        dto.setClient(clientMapper.toDTO(client));
+        dto.setTests(testMapper.toDTOs(dataServiceTest.findAllByIdHistory(history.getIdHistory())));
+        dto.setPrescriptions(prescriptionMapper.toDTOs(dataServicePrescr.findAllByIdHistory(history.getIdHistory())));
+        dto.setVaccinations(vaccinationMapper.toDTOs(dataServiceVacc.findAllByIdHistory(history.getIdHistory())));
+        dto.setConsultations(consultationMapper.toDTOs(dataServiceConsult.findAllByIdHistory(history.getIdHistory())));
+        dto.setReservations(scheduleMapper.toDTOs(calendarService.findByIdClient(client.getIdClient())));
+
+        return ResponseEntity.ok(dto);
+    }*/
 }

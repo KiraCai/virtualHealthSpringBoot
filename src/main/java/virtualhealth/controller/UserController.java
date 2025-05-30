@@ -187,7 +187,7 @@ public class UserController {
     }
 
     //получение почты через url адресс
-    @GetMapping("/{email}")
+    /*@GetMapping("/{email}")
     public Client findUserById(@PathVariable("email") String email) { //идет неявное сопоставление переменной
         return userService.findByEmail(email);
     }
@@ -200,5 +200,5 @@ public class UserController {
     @DeleteMapping("delete_user/{email}")
     public void deleteUserByEmail(@PathVariable("email") String email) {
         userService.deleteUserByEmail(email);
-    }
+    }*/
 }
