@@ -6,7 +6,7 @@ public class DiabetesRiskDTO {
     public Boolean familyHistory;
     public Boolean hypertension;
     public Boolean physicallyActive;
-    public Double height; // в см
-    public Double weight; // в кг
+    public Double height; // sm
+    public Double weight; // kg
 }
 
