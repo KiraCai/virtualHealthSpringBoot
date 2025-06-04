@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+
 public class ConsultationMapper {
 
     public ConsultationDisplayDTO toDTO(Consultation consultation) {

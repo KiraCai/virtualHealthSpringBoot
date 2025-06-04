@@ -1,5 +1,6 @@
 package virtualhealth.mapper;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import virtualhealth.dto.TestDisplayDTO;
 import virtualhealth.model.Test;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 public class TestMapper {
 
     public TestDisplayDTO toDTO(Test test) {

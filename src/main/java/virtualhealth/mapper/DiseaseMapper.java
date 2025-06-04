@@ -1,4 +1,5 @@
 package virtualhealth.mapper;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 import virtualhealth.dto.DiseaseDTO;
 import virtualhealth.model.Disease;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 public class DiseaseMapper {
 
     public DiseaseDTO toDTO(Disease disease) {

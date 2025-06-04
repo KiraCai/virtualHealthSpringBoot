@@ -5,6 +5,7 @@ import virtualhealth.dto.ClientUpdateDTO;
 import virtualhealth.model.Client;
 
 @Component
+
 public class ClientMapper {
     public ClientUpdateDTO toDTO(Client client) {
         ClientUpdateDTO dto = new ClientUpdateDTO();
