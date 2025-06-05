@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import virtualhealth.model.ProteinInfo;
-import virtualhealth.webresources.UniProtResponse;
+import virtualhealth.webresources.uniprot.ProteinInfo;
+import virtualhealth.webresources.uniprot.UniProtResponse;
 
 import java.util.List;
 
@@ -24,7 +24,9 @@ public class UniProtService {
                 .toUriString();
 
         String response = restTemplate.getForObject(url, String.class);
-
+        System.out.println("____________________________________");
+        //System.out.println("UniProt JSON response:\n" + response);
+        System.out.println("____________________________________");
         // Парсим JSON и извлекаем информацию о белках
         return parseProteins(response);
     }

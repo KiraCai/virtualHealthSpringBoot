@@ -22,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/api/v0.1/users/login", "/api/v0.1/users/signup").permitAll()
+                        .requestMatchers("/api/v0.1/users/login", "/api/v0.1/users/signup", "/api/v0.1/users/visualization", "/api/v0.1/users/disease").permitAll() //позволяет без авторизации
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())

@@ -3,10 +3,10 @@ package virtualhealth.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import virtualhealth.dto.SearchResultDTO;
-import virtualhealth.model.Article;
-import virtualhealth.model.ProteinInfo;
-import virtualhealth.webresources.PubMedUtil;
-import virtualhealth.webresources.UniProtUtil;
+import virtualhealth.webresources.pubmed.Article;
+import virtualhealth.webresources.uniprot.ProteinInfo;
+import virtualhealth.webresources.pubmed.PubMedUtil;
+import virtualhealth.webresources.uniprot.UniProtUtil;
 
 import java.util.List;
 

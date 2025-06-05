@@ -1,7 +1,7 @@
 package virtualhealth.dto;
 import lombok.Data;
-import virtualhealth.model.Article;
-import virtualhealth.model.ProteinInfo;
+import virtualhealth.webresources.pubmed.Article;
+import virtualhealth.webresources.uniprot.ProteinInfo;
 
 import java.util.List;
 
@@ -11,7 +11,6 @@ public class SearchResultDTO {
     private List<ProteinInfo> proteins;
 
     public SearchResultDTO() {
-        // обязательный пустой конструктор
     }
 
     public SearchResultDTO(List<Article> articles, List<ProteinInfo> proteins) {

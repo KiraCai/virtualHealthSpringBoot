@@ -1,7 +1,7 @@
-package virtualhealth.webresources;
+package virtualhealth.webresources.pubmed;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import virtualhealth.model.Article;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import virtualhealth.dto.PubMedIdListResponse;
-import virtualhealth.model.Article;
-import virtualhealth.webresources.PubMedFetchResponse;
-import virtualhealth.webresources.PubMedResponse;
+import virtualhealth.webresources.pubmed.Article;
+import virtualhealth.webresources.pubmed.PubMedFetchResponse;
+import virtualhealth.webresources.pubmed.PubMedResponse;
 
 import java.util.List;
 
@@ -30,6 +30,9 @@ public class PubMedService {
 
         RestTemplate restTemplate = new RestTemplate();
         String esearchResponse = restTemplate.getForObject(esearchUrl, String.class);
+        System.out.println("");
+        //System.out.println("research XML response:\n" + esearchResponse);
+        System.out.println("______________________________________");
 
         List<String> pmids = extractPmidsFromXml(esearchResponse);
         if (pmids.isEmpty()) return List.of();
@@ -43,6 +46,7 @@ public class PubMedService {
                 .toUriString();
 
         String efetchResponse = restTemplate.getForObject(efetchUrl, String.class);
+        System.out.println("efetch XML response:\n" + efetchResponse);
 
         // 3. Парсим результат
         return parseFullArticles(efetchResponse);

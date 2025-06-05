@@ -1,4 +1,4 @@
-package virtualhealth.model;
+package virtualhealth.webresources.uniprot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProteinInfo {
-    private String name;
-    private String uniprotId;
-    private String pdbId;
-    private String entryType;
-    private String primaryAccession;
+public class Sequence {
+    private String value;
+    private int length;
+
 }

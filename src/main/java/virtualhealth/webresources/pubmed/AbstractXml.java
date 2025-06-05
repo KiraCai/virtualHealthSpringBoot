@@ -1,4 +1,4 @@
-package virtualhealth.webresources;
+package virtualhealth.webresources.pubmed;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;

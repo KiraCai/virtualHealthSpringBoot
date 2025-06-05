@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import virtualhealth.dto.SearchResultDTO;
-import virtualhealth.model.Article;
-import virtualhealth.model.ProteinInfo;
+import virtualhealth.webresources.pubmed.Article;
+import virtualhealth.webresources.uniprot.ProteinInfo;
 import virtualhealth.service.ExternalSearchService;
 import virtualhealth.service.PubMedService;
 import virtualhealth.service.UniProtService;
@@ -28,7 +28,6 @@ public class GeneSearchController {
     public ResponseEntity<SearchResultDTO> search(@RequestParam String query) {
         List<Article> articles = pubMedService.searchArticles(query);
         List<ProteinInfo> proteins = uniProtService.searchProteins(query);
-        //SearchResultDTO result = searchService.searchByQuery(articles, proteins);
         SearchResultDTO result = new SearchResultDTO();
         result.setArticles(articles);
         result.setProteins(proteins);
