@@ -1,6 +1,8 @@
 package virtualhealth.webresources.uniprot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ class ProteinDescription {
 class RecommendedName {
     private FullName fullName;
     private List<ShortName> shortNames;
+    private List<Evidence> evidences;
 }
 
 @Data
@@ -55,9 +58,54 @@ class ShortName {
 @NoArgsConstructor
 class Comment {
     private String commentType;
-    private List<Text> texts;
+    //private List<Text> texts;
+    private Disease disease;
+    private DbReference dbReference; //добавила для поиска  PDB ID
+    //private List<Interaction> interactions;
+}
+
+
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class Interaction {
+    private String interactantOne;
+    private String interactantTwo;
+    private List<Evidence> evidences;
+}
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class DiseaseComment extends Comment {
     private Disease disease;
 }
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class StructureComment extends Comment {
+    private DbReference dbReference;
+}
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class TextualComment extends Comment {
+    private List<Text> texts;
+}
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class InteractionComment extends Comment {
+    private List<Interaction> interactions;
+}
+
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -95,6 +143,15 @@ class DiseaseCrossReference {
 class Evidence {
     private String evidenceCode;
     private String source;
+    private String id;
+}
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class DbReference {
+    private String type;
     private String id;
 }
 

@@ -46,7 +46,7 @@ public class PubMedService {
                 .toUriString();
 
         String efetchResponse = restTemplate.getForObject(efetchUrl, String.class);
-        System.out.println("efetch XML response:\n" + efetchResponse);
+        //System.out.println("efetch XML response:\n" + efetchResponse);
 
         // 3. Парсим результат
         return parseFullArticles(efetchResponse);

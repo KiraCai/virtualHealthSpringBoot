@@ -25,7 +25,7 @@ public class UniProtService {
 
         String response = restTemplate.getForObject(url, String.class);
         System.out.println("____________________________________");
-        //System.out.println("UniProt JSON response:\n" + response);
+        System.out.println("UniProt JSON response:\n" + response);
         System.out.println("____________________________________");
         // Парсим JSON и извлекаем информацию о белках
         return parseProteins(response);
