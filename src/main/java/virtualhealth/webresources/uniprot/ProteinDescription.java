@@ -60,13 +60,20 @@ class Comment {
     private String commentType;
     //private List<Text> texts;
     private Disease disease;
-    private DbReference dbReference; //добавила для поиска  PDB ID
+    //private DbReference dbReference; //добавила для поиска  PDB ID
     //private List<Interaction> interactions;
+    //private List<InteractionWrapper> interactions;
 }
+/*@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+class InteractionWrapper {
+    private Interaction interaction;
+}*/
 
 
-
-@Data
+/*@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -74,9 +81,9 @@ class Interaction {
     private String interactantOne;
     private String interactantTwo;
     private List<Evidence> evidences;
-}
+}*/
 
-@Data
+/*@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -97,15 +104,32 @@ class StructureComment extends Comment {
 @NoArgsConstructor
 class TextualComment extends Comment {
     private List<Text> texts;
-}
-@Data
+}*/
+/*@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
 class InteractionComment extends Comment {
     private List<Interaction> interactions;
+}*/
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class UniProtKBCrossReference {
+    private String database;
+    private String id;
+    private List<Property> properties;
 }
 
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class Property {
+    private String key;
+    private String value;
+}
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

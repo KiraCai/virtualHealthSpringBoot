@@ -26,6 +26,8 @@ public class ProteinInfo {
     private List<Gene> genes; // список генов
     @ToString.Exclude
     private List<Comment> comments;
+    @ToString.Exclude
+    private List<UniProtKBCrossReference> uniProtKBCrossReferences;
     private String commentType;
     private String properties;
     private Sequence sequence;
