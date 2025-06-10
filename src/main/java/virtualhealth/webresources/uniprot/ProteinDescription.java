@@ -82,13 +82,6 @@ class Property {
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-class Text {
-    private String value;
-}
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-@AllArgsConstructor
-@NoArgsConstructor
 class Disease {
     private String diseaseId;
     private String diseaseAccession;
@@ -116,13 +109,3 @@ class Evidence {
     private String source;
     private String id;
 }
-
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-@AllArgsConstructor
-@NoArgsConstructor
-class DbReference {
-    private String type;
-    private String id;
-}
-
