@@ -31,6 +31,8 @@ public class ProteinInfo {
     private String commentType;
     private String properties;
     private Sequence sequence;
+    @ToString.Exclude
+    private List<Feature> features;
 
 
 }

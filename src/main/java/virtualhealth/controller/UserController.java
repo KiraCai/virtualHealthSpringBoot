@@ -72,7 +72,7 @@ public class UserController {
         userService.addUser(client);
     }
 
-    @GetMapping("/profile")
+    /*@GetMapping("/profile")
     public ResponseEntity getProfile(@RequestHeader("Authorization") String authHeader) {
         try {
             if (!authHeader.startsWith("Bearer ")) {
@@ -86,7 +86,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный или просроченный токен");
         }
-    }
+    }*/
 
     @GetMapping("/profile/full")
     public ResponseEntity getFullProfile(@RequestHeader("Authorization") String authHeader) {
