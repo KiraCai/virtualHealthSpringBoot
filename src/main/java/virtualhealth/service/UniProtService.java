@@ -86,7 +86,7 @@ public class UniProtService {
             ObjectMapper objectMapper = new ObjectMapper();
             UniProtVariantResponse parsed = objectMapper.readValue(body, UniProtVariantResponse.class);
             System.out.println("отдельные части");
-            System.out.println("Accession: " + parsed.getAccession());
+            //System.out.println("Accession: " + parsed.getAccession());
             return parsed.getFeatures() != null ? parsed.getFeatures() : List.of();
 
         } catch (Exception e) {

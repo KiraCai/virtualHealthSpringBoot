@@ -23,13 +23,17 @@ public class Feature {
     private String begin;                      // Начало мутации
     private String end;                        // Конец мутации
     private String molecule;
+    private String wildType;
+    private String mutatedType;
+    private Byte somaticStatus;
 
     private Ligand ligand;
     private Ligand ligandPart;
     private List<Association> association;
-
+    private List<Descriptions> descriptions;
     private List<Xref> xrefs;
     private List<ProteinEvidence> evidences;
+
 }
 
 @Data
@@ -40,6 +44,14 @@ class Association {
     private String name;
     private String description;
     private Boolean disease;
+}
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+class Descriptions {
+    private String value;
 }
 
 @Data

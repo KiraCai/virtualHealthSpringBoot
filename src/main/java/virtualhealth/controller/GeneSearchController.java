@@ -38,7 +38,7 @@ public class GeneSearchController {
             if (protein.getPrimaryAccession() != null) {
                 System.out.println("если не пустой начато фэтч");
                 List<Feature> variants = uniProtService.fetchVariants(protein.getPrimaryAccession());
-                System.out.println("Запрос визуализации для accession: " + protein.getPrimaryAccession() + ", варианты: " + variants);
+                //System.out.println("Запрос визуализации для accession: " + protein.getPrimaryAccession() + ", варианты: " + variants);
                 protein.setFeatures(variants); // Добавляем список мутаций внутрь белка
             }
         }
