@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -33,6 +34,8 @@ public class ProteinInfo {
     private Sequence sequence;
     @ToString.Exclude
     private List<Feature> features;
+    @ToString.Exclude
+    private Map<Integer, Integer> conservationScores;
 
 
 }

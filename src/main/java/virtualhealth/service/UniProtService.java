@@ -93,6 +93,8 @@ public class UniProtService {
             log.error("❌ Ошибка при получении вариантов: ", e);
             return List.of();
         }
+
+
     }
 
 
