@@ -17,9 +17,8 @@ public class MsaConservationService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    private static final String TCOFFEE_RUN_URL = "https://www.ebi.ac.uk/Tools/services/rest/tcoffee/run/";
-    private static final String TCOFFEE_STATUS_URL = "https://www.ebi.ac.uk/Tools/services/rest/tcoffee/status/";
-    private static final String TCOFFEE_RESULT_URL = "https://www.ebi.ac.uk/Tools/services/rest/tcoffee/result/";
+    private static final String MAFFT_STATUS_URL = "https://www.ebi.ac.uk/Tools/services/rest/mafft/status/";
+    private static final String MAFFT_RESULT_URL = "https://www.ebi.ac.uk/Tools/services/rest/mafft/result/";
 
     /**
      * Получить последовательности UniProt по UniProtID (упрощённо)
@@ -27,19 +26,15 @@ public class MsaConservationService {
      */
     public List<String> getUniProtSequences(String uniprotId) {
         System.out.println(uniprotId);
-        System.out.println("Зашёл в мса");
+        System.out.println("Зашёл в послед нашего белка");
         String url = "https://rest.uniprot.org/uniprotkb/" + uniprotId + ".fasta";
         System.out.println(url);
-
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        //System.out.println(response.getBody());
 
         if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
             String fasta = response.getBody();
 
-
-            // Для демонстрации сделаем 3 копии (минимум 2 последовательности нужны для MSA)
-            return Arrays.asList(fasta, fasta, fasta);
+            return List.of(fasta);
         } else {
             throw new RuntimeException("Ошибка получения последовательности UniProt " + uniprotId);
         }
@@ -49,13 +44,6 @@ public class MsaConservationService {
         String runUrl = "https://www.ebi.ac.uk/Tools/services/rest/ncbiblast/run";
         String statusUrl = "https://www.ebi.ac.uk/Tools/services/rest/ncbiblast/status/";
         String resultUrl = "https://www.ebi.ac.uk/Tools/services/rest/ncbiblast/result/";
-        System.out.println("Отправляем запрос на BLAST с параметрами:");
-        System.out.println("sequence: [" + sequence.substring(0, Math.min(sequence.length(), 100)) + "...]"); // длинные не выводим полностью
-        System.out.println("stype: [protein]");
-        System.out.println("database: [uniprotkb_swissprot]");
-        System.out.println("program: [blastp]");
-        System.out.println("email: [kiraswav@gmail.com]");
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -68,21 +56,14 @@ public class MsaConservationService {
         System.out.println("Отправляем запрос на BLAST с параметрами:");
         params.forEach((k, v) -> System.out.println(k + ": " + v));
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-
-        System.out.println("Ответ от BLAST:");
-
         ResponseEntity<String> response = restTemplate.postForEntity(runUrl, request, String.class);
-
         System.out.println("Ответ BLAST сервера:");
-        System.out.println(response.getStatusCode());
         System.out.println(response.getBody());
 
         if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null) {
             throw new RuntimeException("BLAST запуск не удался: " + response.getStatusCode());
         }
-
         String jobId = response.getBody();
-
         // Ждём завершения
         Integer retries = 30;
         String status;
@@ -96,17 +77,10 @@ public class MsaConservationService {
         }
         // Получаем идентификаторы хитов (UniProt ID)
         String idsText = restTemplate.getForObject(resultUrl + jobId + "/ids", String.class);
-        System.out.println("BLAST IDs raw text:");
-        System.out.println(idsText);
-
 
         List<String> ids = Arrays.stream(idsText.split("\n"))
-                .filter(line -> line.startsWith("SP:")) // строки начинаются с SP:
-                .map(line -> line.substring(3))         // убираем префикс SP:
-                .map(line -> {
-                    int underscoreIndex = line.indexOf('_');
-                    return (underscoreIndex > 0) ? line.substring(0, underscoreIndex) : line;
-                })
+                .filter(line -> line.startsWith("SP:"))        // строки начинаются с SP:
+                .map(line -> line.substring(3))                // убираем префикс SP:
                 .distinct()
                 .limit(maxHits)
                 .collect(Collectors.toList());
@@ -116,7 +90,9 @@ public class MsaConservationService {
         List<String> sequences = new ArrayList<>();
         for (String id : ids) {
             try {
-                String fasta = restTemplate.getForObject("https://rest.uniprot.org/uniprotkb/" + id + ".fasta", String.class);
+                String urlClean = "https://rest.uniprot.org/uniprotkb/" + id + ".fasta";
+                System.out.println(urlClean);
+                String fasta = restTemplate.getForObject(urlClean, String.class);
                 if (fasta != null) sequences.add(fasta);
             } catch (Exception e) {
                 System.out.println("Ошибка загрузки последовательности: " + id);
@@ -124,7 +100,6 @@ public class MsaConservationService {
         }
         return sequences;
     }
-
 
     /**
      * Запускает coffi
@@ -137,15 +112,11 @@ public class MsaConservationService {
             formattedFasta.add(seq);
         }
         String fastaInput = String.join("\n", formattedFasta);
-        System.out.println(fastaInput);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("sequence", fastaInput);
         params.add("email", "kiraswav@gmail.com");
-
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
         String mafftRunUrl = "https://www.ebi.ac.uk/Tools/services/rest/mafft/run";
@@ -158,13 +129,12 @@ public class MsaConservationService {
         }
     }
 
-
     /**
      * Проверяет статус выполнения задания
      */
     public String getJobStatus(String jobId) {
-        String url = TCOFFEE_STATUS_URL + jobId;
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String urll = MAFFT_STATUS_URL + jobId;
+        ResponseEntity<String> response = restTemplate.getForEntity(urll, String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         } else {
@@ -172,12 +142,11 @@ public class MsaConservationService {
         }
     }
 
-
     /**
      * Получает выравнивание в формате FASTA
      */
     public String getMsaResult(String jobId) {
-        String url = "https://www.ebi.ac.uk/Tools/services/rest/mafft/result/" + jobId + "/aln-clustal";
+        String url = MAFFT_RESULT_URL + jobId + "/out";
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
         if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
@@ -186,8 +155,6 @@ public class MsaConservationService {
             throw new RuntimeException("Ошибка получения результата MAFFT: " + response.getStatusCode());
         }
     }
-
-
 
     /**
      * Парсинг FASTA выравнивания в список последовательностей (без заголовков)
@@ -210,6 +177,7 @@ public class MsaConservationService {
         if (currentSeq.length() > 0) {
             sequences.add(currentSeq.toString());
         }
+        System.out.println("Всего получено последовательностей: " + sequences.size());
         return sequences;
     }
 
@@ -249,7 +217,6 @@ public class MsaConservationService {
         return entropyMap;
     }
 
-
     /**
      * Основной метод: принимает UniProt ID,
      * возвращает карту позиции -> энтропия
@@ -262,12 +229,11 @@ public class MsaConservationService {
         // Получить похожие последовательности через BLAST
         List<String> similarSeqs = getSimilarSequencesByBlast(sequence, 30);
         if (similarSeqs.isEmpty()) {
-            throw new RuntimeException("BLAST не вернул похожих последовательностей");
+            System.out.println("BLAST не вернул похожих последовательностей. Выполняем MSA только на собственной последовательности.");
+            similarSeqs = List.of(selfFasta);
         }
-
         // Добавим собственную последовательность в начало
         similarSeqs.add(0, selfFasta);
-
         // MSA
         String jobId = submitMsaJob(similarSeqs);
 
@@ -285,9 +251,10 @@ public class MsaConservationService {
         }
 
         String msaFasta = getMsaResult(jobId);
+        System.out.println("дошли епта до сюда");
         List<String> alignedSeqs = parseFastaAlignment(msaFasta);
+        System.out.println("!!!!!!!!!!!!!!");
         return calculateEntropyPerPosition(alignedSeqs);
     }
-
 }
 

@@ -35,7 +35,7 @@ public class ProteinInfo {
     @ToString.Exclude
     private List<Feature> features;
     @ToString.Exclude
-    private Map<Integer, Integer> conservationScores;
+    private Map<Integer, Double> shannonEntropy;
 
 
 }

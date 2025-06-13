@@ -4,26 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-import virtualhealth.webresources.uniprot.*;
-import org.slf4j.Logger;
-
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ConservationService {
-
-
     private final RestTemplate restTemplate;
     MsaConservationService service = new MsaConservationService();
 
@@ -31,7 +19,7 @@ public class ConservationService {
         this.restTemplate = builder.build();
     }
 
-    public Map<Integer, Integer> fetchConservationScores(String uniprotId) {
+    public Map<Integer, Double> fetchConservationScores(String uniprotId) {
         String url = "https://consurfdb.tau.ac.il/api/" + uniprotId + "/json";
         System.out.println(url);
 
@@ -47,20 +35,18 @@ public class ConservationService {
         }*/
 
         try {
-            // сюда
             System.out.println("сюда зашел");
             Map<Integer, Double> entropyMap = service.getConservationByUniProtId(uniprotId);
-
             entropyMap.forEach((pos, entropy) -> {
-                System.out.printf("Position %d: Entropy = %.3f\n", pos, entropy);
+                //System.out.printf("Position %d: Entropy = %.3f\n", pos, entropy);
             });
 
             System.out.println("Шенон дал данных");
+            return entropyMap;
         } catch (Exception e) {
             System.err.println("Ошибка: " + e.getMessage());
+            return Collections.emptyMap();
         }
-
-        return Collections.emptyMap();
     }
 
     private Map<Integer, Integer> parseConservationScores(String json) throws JsonProcessingException {
@@ -80,7 +66,6 @@ public class ConservationService {
         System.out.println("итоговая карта успех" + scoreMap);
         return scoreMap;
     }
-
 
 }
 

@@ -40,20 +40,14 @@ public class GeneSearchController {
             if (protein.getPrimaryAccession() != null) {
                 System.out.println("если не пустой начато фэтч");
                 List<Feature> variants = uniProtService.fetchVariants(protein.getPrimaryAccession());
-                //System.out.println("Запрос визуализации для accession: " + protein.getPrimaryAccession() + ", варианты: " + variants);
                 protein.setFeatures(variants); // Добавляем список мутаций внутрь белка
-
-                Map<Integer, Integer> scores = conservationService.fetchConservationScores(protein.getPrimaryAccession());
-                protein.setConservationScores(scores);
+                Map<Integer, Double> entropy = conservationService.fetchConservationScores(protein.getPrimaryAccession());
+                protein.setShannonEntropy(entropy);
             }
         }
-
         SearchResultDTO result = new SearchResultDTO();
         result.setArticles(articles);
         result.setProteins(proteins);
         return ResponseEntity.ok(result);
     }
-
-
-
 }
