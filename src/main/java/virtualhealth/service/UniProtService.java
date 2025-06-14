@@ -8,6 +8,7 @@ import lombok.Data;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import virtualhealth.webresources.uniprot.*;
@@ -28,11 +29,12 @@ public class UniProtService {
     private static final String UNIPROT_VARIANT_URL = "https://rest.uniprot.org/uniprotkb/{accession}.json?fields=features";
 
     private RestTemplate restTemplate;
-    public List<ProteinInfo> searchProteins(String query) {
+    public List<ProteinInfo> searchProteins(String query, int limit) {
         // Строим URL для запроса
         String url = UriComponentsBuilder.fromHttpUrl(UNIPROT_BASE_URL)
                 .queryParam("query", query)
                 .queryParam("format", "json")  // Ответ в формате JSON
+                .queryParam("size", limit)
                 .toUriString();
         try {
             String response = restTemplate.getForObject(url, String.class);
@@ -89,7 +91,12 @@ public class UniProtService {
             //System.out.println("Accession: " + parsed.getAccession());
             return parsed.getFeatures() != null ? parsed.getFeatures() : List.of();
 
+        } catch (HttpClientErrorException.NotFound e) {
+            // 404 — просто нет данных, не страшно
+            log.warn("⚠️ Варианты не найдены для accession: {} (404)", accession);
+            return List.of();
         } catch (Exception e) {
+            // Другие ошибки — логируем и идем дальше
             log.error("❌ Ошибка при получении вариантов: ", e);
             return List.of();
         }

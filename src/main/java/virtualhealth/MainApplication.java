@@ -33,6 +33,18 @@ public class MainApplication {
 								 CalendarService calendarService) { // специальный бин, который автоматически запускается после старта приложения.
 		return args -> {
 			System.out.println("+");
+			Client client = new Client();
+			client.setFirstName("Иван");
+			client.setLastName("Иванов");
+			client.setDateBirth(LocalDate.of(1990, 1, 1));
+			client.setEmail("ivanov@example.com");
+			client.setPassword("password12QWExc");
+			// другие поля клиента
+
+			History history = new History();
+			history.setClient(client);
+
+			System.out.println("Клиент с историей сохранён");
 
 		};
 	}

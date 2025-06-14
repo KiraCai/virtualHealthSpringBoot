@@ -34,11 +34,13 @@ public class GeneSearchController {
     @GetMapping("/visualization")
     public ResponseEntity<SearchResultDTO> search(@RequestParam String query) {
         List<Article> articles = pubMedService.searchArticles(query);
-        List<ProteinInfo> proteins = uniProtService.searchProteins(query);
-
+        List<ProteinInfo> proteins = uniProtService.searchProteins(query, 2);
+        Integer counter = 0;
         for (ProteinInfo protein : proteins) {
             if (protein.getPrimaryAccession() != null) {
                 System.out.println("если не пустой начато фэтч");
+                counter += 1;
+                System.out.println(counter +" номер белка");
                 List<Feature> variants = uniProtService.fetchVariants(protein.getPrimaryAccession());
                 protein.setFeatures(variants); // Добавляем список мутаций внутрь белка
                 Map<Integer, Double> entropy = conservationService.fetchConservationScores(protein.getPrimaryAccession());

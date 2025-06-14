@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import virtualhealth.dao.BiomarkerDao;
 import virtualhealth.dao.DiseaseDao;
+import virtualhealth.dao.HistoryDao;
+import virtualhealth.dao.UserDao;
 import virtualhealth.model.Biomarker;
+import virtualhealth.model.Client;
 import virtualhealth.model.Disease;
+import virtualhealth.model.History;
 
 import java.math.BigDecimal;
 
@@ -16,12 +20,21 @@ import java.math.BigDecimal;
 public class DataLoaderService {
     private DiseaseDao diseaseDao;
     private BiomarkerDao biomarkerDao;
+    private UserDao clientDao;
+    private HistoryDao historyDao;
 
     @PostConstruct
     @Transactional
     public void loadData() {
         // Pneumonia
         Disease pneumonia;
+        History history;
+        if (!clientDao.existsById(Long.parseLong("1"))) {
+            history = new History();
+            history.setClient(clientDao.getById(Long.parseLong("1")));
+        }
+
+
         if (!diseaseDao.existsByName("Pneumonia")) {
             pneumonia = new Disease();
             pneumonia.setName("Pneumonia");

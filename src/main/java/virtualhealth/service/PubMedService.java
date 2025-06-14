@@ -11,6 +11,7 @@ import virtualhealth.webresources.pubmed.Article;
 import virtualhealth.webresources.pubmed.PubMedFetchResponse;
 import virtualhealth.webresources.pubmed.PubMedResponse;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,7 +25,7 @@ public class PubMedService {
         String esearchUrl = UriComponentsBuilder.fromHttpUrl(PUBMED_BASE_URL)
                 .queryParam("db", "pubmed")
                 .queryParam("term", query)
-                .queryParam("retmax", "10")
+                .queryParam("retmax", "15")
                 .queryParam("retmode", "xml")
                 .toUriString();
 
@@ -35,6 +36,9 @@ public class PubMedService {
         System.out.println("______________________________________");
 
         List<String> pmids = extractPmidsFromXml(esearchResponse);
+        if (pmids == null || pmids.isEmpty()) {
+            return Collections.emptyList();
+        }
         if (pmids.isEmpty()) return List.of();
 
         // 2. Получаем полные статьи по этим PMIDs
