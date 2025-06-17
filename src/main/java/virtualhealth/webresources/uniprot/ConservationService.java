@@ -22,7 +22,7 @@ public class ConservationService {
     public Map<Integer, Double> fetchConservationScores(String uniprotId) {
         String url = "https://consurfdb.tau.ac.il/api/" + uniprotId + "/json";
         System.out.println(url);
-
+        //ConSurf
         /*try {
             ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
             System.out.println("здесь ответ с сервера" + response.getBody());
