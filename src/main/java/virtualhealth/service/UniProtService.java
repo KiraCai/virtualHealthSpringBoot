@@ -14,26 +14,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 import virtualhealth.webresources.uniprot.*;
 import org.slf4j.Logger;
 
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UniProtService {
     private static final Logger log = LoggerFactory.getLogger(UniProtService.class);
-
     private static final String UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb/search";
     private static final String UNIPROT_VARIANT_URL = "https://rest.uniprot.org/uniprotkb/{accession}.json?fields=features";
 
     private RestTemplate restTemplate;
     public List<ProteinInfo> searchProteins(String query, int limit) {
-        // Строим URL для запроса
+        // URL for request
         String url = UriComponentsBuilder.fromHttpUrl(UNIPROT_BASE_URL)
                 .queryParam("query", query)
-                .queryParam("format", "json")  // Ответ в формате JSON
+                .queryParam("format", "json")  // Response in JSON format
                 .queryParam("size", limit)
                 .toUriString();
         try {
@@ -41,31 +36,29 @@ public class UniProtService {
             System.out.println("____________________________________");
             //System.out.println("UniProt JSON response:\n" + response);
             System.out.println("____________________________________");
-            // Парсим JSON и извлекаем информацию о белках
+            // Parsing JSON and extracting protein information
             return parseProteins(response);
 
         } catch (Exception e) {
             e.printStackTrace();
             return List.of();
         }
-
     }
 
     private List<ProteinInfo> parseProteins(String jsonResponse) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             UniProtResponse uniProtResponse = objectMapper.readValue(jsonResponse, UniProtResponse.class);
-            // Возвращаем список белков
+            // Returning a list of proteins
             return uniProtResponse.getProteins();
         } catch (Exception e) {
             e.printStackTrace();
-            return List.of();  // Возвращаем пустой список в случае ошибки
+            return List.of();
         }
     }
 
     public List<Feature> fetchVariants(String accession) {
-        log.info("⏳ Загружаем варианты для accession: {}", accession);
-
+        log.info("⏳ Loading options for accession: {}", accession);
         String url = "https://www.ebi.ac.uk/proteins/api/variation/" + accession;
 
         try {
@@ -82,31 +75,21 @@ public class UniProtService {
 
             String body = response.getBody();
 
-            System.out.println("📦 Variant JSON response (первые 1000 символов):");
+            System.out.println("📦 Variant JSON response:");
             System.out.println(body.substring(0, Math.min(body.length(), 1000)));
 
             ObjectMapper objectMapper = new ObjectMapper();
             UniProtVariantResponse parsed = objectMapper.readValue(body, UniProtVariantResponse.class);
-            System.out.println("отдельные части");
-            //System.out.println("Accession: " + parsed.getAccession());
             return parsed.getFeatures() != null ? parsed.getFeatures() : List.of();
 
         } catch (HttpClientErrorException.NotFound e) {
-            // 404 — просто нет данных, не страшно
-            log.warn("⚠️ Варианты не найдены для accession: {} (404)", accession);
+            log.warn("⚠️ No options found for accession: {} (404)", accession);
             return List.of();
         } catch (Exception e) {
-            // Другие ошибки — логируем и идем дальше
-            log.error("❌ Ошибка при получении вариантов: ", e);
+            log.error("❌ Error while getting options: ", e);
             return List.of();
         }
-
-
     }
-
-
-
-
 }
 
 @Data

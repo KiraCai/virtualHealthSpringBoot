@@ -21,7 +21,7 @@ public class PubMedService {
     private static final String PUBMED_BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi";
 
     public List<Article> searchArticles(String query) {
-        // 1. Сначала получаем список PMIDs
+        // 1. First we get a list of PMIDs
         String esearchUrl = UriComponentsBuilder.fromHttpUrl(PUBMED_BASE_URL)
                 .queryParam("db", "pubmed")
                 .queryParam("term", query)
